@@ -1,5 +1,5 @@
-﻿using MakoIoT.Device.Services.DependencyInjection;
-using MakoIoT.Device.Services.Interface;
+﻿using MakoIoT.Device.Services.Interface;
+using nanoFramework.DependencyInjection;
 
 namespace MakoIoT.Device.Services.DataProviders.Extensions
 {
@@ -11,16 +11,16 @@ namespace MakoIoT.Device.Services.DataProviders.Extensions
         {
             var options = new DataProvidersOptions();
             configurator(options);
-            DI.RegisterInstance(typeof(DataProvidersOptions), options);
+            builder.Services.AddSingleton(typeof(DataProvidersOptions), options);
 
             builder.DeviceStarting += Builder_DeviceStarting;
 
             return builder;
         }
 
-        private static void Builder_DeviceStarting(object sender, System.EventArgs e)
+        private static void Builder_DeviceStarting(IDevice sender)
         {
-            var dp = (DataPublisher)DI.BuildUp(typeof(DataPublisher));
+            var dp = (DataPublisher)ActivatorUtilities.CreateInstance(sender.ServiceProvider, typeof(DataPublisher));
             dp.InitializeDataProviders();
         }
     }

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections;
 using MakoIoT.Device.Services.DataProviders.Configuration;
-using MakoIoT.Device.Services.DependencyInjection;
 using MakoIoT.Device.Services.Interface;
 using Microsoft.Extensions.Logging;
+using nanoFramework.DependencyInjection;
 
 namespace MakoIoT.Device.Services.DataProviders
 {
@@ -13,16 +13,16 @@ namespace MakoIoT.Device.Services.DataProviders
         private readonly IMessageBus _messageBus;
         private readonly IConfigurationService _config;
         private readonly ILogger _logger;
-
+        private readonly IServiceProvider serviceProvider;
         private readonly Hashtable _dataProviders = new();
 
-        public DataPublisher(IScheduler scheduler, IMessageBus messageBus, IConfigurationService config, ILogger logger, DataProvidersOptions options)
+        public DataPublisher(IScheduler scheduler, IMessageBus messageBus, IConfigurationService config, ILogger logger, DataProvidersOptions options, IServiceProvider serviceCollection)
         {
             _scheduler = scheduler;
             _messageBus = messageBus;
             _config = config;
             _logger = logger;
-
+            this.serviceProvider = serviceCollection;
             RegisterDataProviders(options);
         }
 
@@ -31,7 +31,7 @@ namespace MakoIoT.Device.Services.DataProviders
             foreach (var p in options.DataProviders.Keys)
             {
                 _logger.LogDebug($"Adding data provider {p}");
-                var provider = (IDataProvider)DI.BuildUp((Type)options.DataProviders[p]);
+                var provider = (IDataProvider)ActivatorUtilities.CreateInstance(serviceProvider, (Type)options.DataProviders[p]);
                 _dataProviders.Add(p, provider);
                 provider.DataReceived += ProviderOnDataReceived;
             }
