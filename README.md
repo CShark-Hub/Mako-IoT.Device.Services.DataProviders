@@ -1,4 +1,7 @@
-# Project readme
+# Mako-IoT.Device.Services.DataProviders
+ A _Data Provider_ periodically reads value and sends it through message bus. 
+ 
+ TODO: example
 
 ## How to manually sync fork
 - Clone repository and navigate into folder
