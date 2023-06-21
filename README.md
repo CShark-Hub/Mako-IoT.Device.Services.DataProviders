@@ -1,5 +1,5 @@
 # Mako-IoT.Device.Services.DataProviders
-This component lets you send data (for example from sensors) through mesage bus either periodically or based on an event.
+This component lets you send data (for example from sensors) through mesage bus either periodically or based on an event. See [Messaging sample](https://github.com/CShark-Hub/Mako-IoT.Device.Samples/tree/main/Messaging).
 
 ## Usage
 Data provider with periodically executed logic ("polling")
