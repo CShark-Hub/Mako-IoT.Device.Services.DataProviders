@@ -25,13 +25,15 @@
     <Compile Include="Extensions\DeviceBuilderExtension.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="MakoIoT.Device.Services.Interface, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\packages\MakoIoT.Device.Services.Interface.1.0.36.21434\lib\MakoIoT.Device.Services.Interface.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="MakoIoT.Device.Services.Interface">
+      <HintPath>..\..\packages\MakoIoT.Device.Services.Interface.1.0.38.18612\lib\MakoIoT.Device.Services.Interface.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib, Version=1.14.3.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>..\..\packages\nanoFramework.CoreLibrary.1.14.2\lib\mscorlib.dll</HintPath>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="nanoFramework.DependencyInjection">
+      <HintPath>..\..\packages\nanoFramework.DependencyInjection.1.1.1\lib\nanoFramework.DependencyInjection.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.DependencyInjection, Version=1.0.35.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>..\..\packages\nanoFramework.DependencyInjection.1.0.35\lib\nanoFramework.DependencyInjection.dll</HintPath>

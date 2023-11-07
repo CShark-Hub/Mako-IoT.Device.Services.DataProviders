@@ -1,5 +1,5 @@
 ﻿using MakoIoT.Device.Services.Interface;
-using nanoFramework.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace MakoIoT.Device.Services.DataProviders.Extensions
 {
