@@ -19,8 +19,8 @@
     <dependencies>
       <dependency id="nanoFramework.CoreLibrary" version="1.14.2" />
       <dependency id="nanoFramework.Logging" version="1.1.63" />
-      <dependency id="MakoIoT.Device.Services.Interface" version="1.0.36.21434" />
-      <dependency id="nanoFramework.DependencyInjection" version="1.0.35" />
+      <dependency id="MakoIoT.Device.Services.Interface" version="1.0.37.9044" />
+      <dependency id="nanoFramework.DependencyInjection" version="1.1.1" />
     </dependencies>
   </metadata>
   <files>
