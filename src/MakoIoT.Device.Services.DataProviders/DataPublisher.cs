@@ -2,7 +2,6 @@
 using System.Collections;
 using MakoIoT.Device.Services.DataProviders.Configuration;
 using MakoIoT.Device.Services.Interface;
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace MakoIoT.Device.Services.DataProviders
@@ -12,17 +11,17 @@ namespace MakoIoT.Device.Services.DataProviders
         private readonly IScheduler _scheduler;
         private readonly IMessageBus _messageBus;
         private readonly IConfigurationService _config;
-        private readonly ILogger _logger;
-        private readonly IServiceProvider serviceProvider;
+        private readonly ILog _logger;
+        private readonly IServiceProvider _serviceProvider;
         private readonly Hashtable _dataProviders = new();
 
-        public DataPublisher(IScheduler scheduler, IMessageBus messageBus, IConfigurationService config, ILogger logger, DataProvidersOptions options, IServiceProvider serviceCollection)
+        public DataPublisher(IScheduler scheduler, IMessageBus messageBus, IConfigurationService config, ILog logger, DataProvidersOptions options, IServiceProvider serviceProvider)
         {
             _scheduler = scheduler;
             _messageBus = messageBus;
             _config = config;
             _logger = logger;
-            this.serviceProvider = serviceCollection;
+            _serviceProvider = serviceProvider;
             RegisterDataProviders(options);
         }
 
@@ -30,8 +29,8 @@ namespace MakoIoT.Device.Services.DataProviders
         {
             foreach (var p in options.DataProviders.Keys)
             {
-                _logger.LogDebug($"Adding data provider {p}");
-                var provider = (IDataProvider)ActivatorUtilities.CreateInstance(serviceProvider, (Type)options.DataProviders[p]);
+                _logger.Trace($"Adding data provider {p}");
+                var provider = (IDataProvider)ActivatorUtilities.CreateInstance(_serviceProvider, (Type)options.DataProviders[p]);
                 _dataProviders.Add(p, provider);
                 provider.DataReceived += ProviderOnDataReceived;
             }
@@ -39,7 +38,7 @@ namespace MakoIoT.Device.Services.DataProviders
 
         private void ProviderOnDataReceived(object sender, MessageEventArgs e)
         {
-            _logger.LogDebug($"Message {e.Message.MessageType} received from data provider");
+            _logger.Trace($"Message {e.Message.MessageType} received from data provider");
             _messageBus.Publish(e.Message);
         }
 
@@ -51,7 +50,7 @@ namespace MakoIoT.Device.Services.DataProviders
             {
                 try
                 {
-                    _logger.LogDebug(
+                    _logger.Trace(
                         $"DataProviderId found in config: {providerConfig.DataProviderId}, {providerConfig.PollInterval}");
                     if (_dataProviders.Contains(providerConfig.DataProviderId))
                     {
@@ -60,12 +59,12 @@ namespace MakoIoT.Device.Services.DataProviders
                     }
                     else
                     {
-                        _logger.LogWarning($"Provider implementation {providerConfig.DataProviderId} not found");
+                        _logger.Warning($"Provider implementation {providerConfig.DataProviderId} not found");
                     }
                 }
                 catch (Exception e)
                 {
-                    _logger.LogError(e, $"Error initializing data provider {providerConfig?.DataProviderId}");
+                    _logger.Error($"Error initializing data provider {providerConfig?.DataProviderId}", e);
                 }
             }
         }
