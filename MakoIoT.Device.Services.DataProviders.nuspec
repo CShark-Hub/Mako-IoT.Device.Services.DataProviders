@@ -18,7 +18,7 @@
     <tags>nanoFramework C# csharp netmf netnf mako-iot data providers</tags>
     <dependencies>
       <dependency id="nanoFramework.CoreLibrary" version="1.17.11" />
-      <dependency id="MakoIoT.Device.Services.Interface" version="1.0.56.42770" />
+      <dependency id="MakoIoT.Device.Services.Interface" version="1.0.57.48509" />
       <dependency id="nanoFramework.DependencyInjection" version="1.1.32" />
     </dependencies>
   </metadata>
